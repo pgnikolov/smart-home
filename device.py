@@ -39,9 +39,12 @@ class Light(Device):
         self.brightness = brightness
         self.color = color
 
-    def get_info(self):
-        return {
-            'status': self.status,
-            'brightness': self.brightness,
-            'color': self.color
-        }
+
+class Thermostat(Device):
+
+    def __init__(self, device_id, name, current_temperature, target_temperature, status=False):
+        super().__init__(device_id, name, status)
+        self.current_temperature = current_temperature
+        self.target_temperature = target_temperature
+
+
