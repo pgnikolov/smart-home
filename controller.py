@@ -1,4 +1,4 @@
-from device import Device, Light, Thermostat, DoorLock
+from device import Light, Thermostat
 
 
 def check_device_status(func):
