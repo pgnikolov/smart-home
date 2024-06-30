@@ -34,17 +34,29 @@ class Device:
 
 class Light(Device):
 
-    def __init__(self, device_id, name, brightness, color, status=False):
+    def __init__(self, device_id, name, brightness, status=False):
         super().__init__(device_id, name, status)
         self.brightness = brightness
-        self.color = color
+        self.color = None
 
 
 class Thermostat(Device):
 
-    def __init__(self, device_id, name, current_temperature, target_temperature, status=False):
+    def __init__(self, device_id, name, current_temp, status=False):
         super().__init__(device_id, name, status)
-        self.current_temperature = current_temperature
-        self.target_temperature = target_temperature
+        self.current_temp = current_temp
+        self.target_temp = None
+
+
+class DoorLock(Device):
+
+    def __init__(self, device_id, name, status=False):
+        super().__init__(device_id, name, status)
+
+    def get_status(self):
+        if self.status:
+            return "unlocked"
+        else:
+            return "locked"
 
 
