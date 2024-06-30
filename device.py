@@ -1,10 +1,13 @@
 def actoins_print(func):
     def wrapper(*args, **kwargs):
         device = args[0]
-        if device.status:
-            status = 'on'
+        if isinstance(device, DoorLock):
+            status = device.get_status()
         else:
-            status = 'off'
+            if device.status:
+                status = 'on'
+            else:
+                status = 'off'
         print(f'Action: {func.__name__}, Device: {device.name}, Status: {status}')
         return func(*args, **kwargs)
     return wrapper
