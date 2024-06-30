@@ -1,14 +1,19 @@
-def actoins_print(func):
+def check_status_before_action(func):
     def wrapper(*args, **kwargs):
         device = args[0]
+        action = func.__name__
         if isinstance(device, DoorLock):
-            status = device.get_status()
+            current_status = device.status
+            if action == 'turn_on' and current_status:
+                return f'{device.name} is already unlocked.'
+            if action == 'turn_off' and not current_status:
+                return f'{device.name} is already locked.'
         else:
-            if device.status:
-                status = 'on'
-            else:
-                status = 'off'
-        print(f'Action: {func.__name__}, Device: {device.name}')
+            current_status = device.status
+            if action == 'turn_on' and current_status:
+                return f'{device.name} is already on.'
+            if action == 'turn_off' and not current_status:
+                return f'{device.name} is already off.'
         return func(*args, **kwargs)
     return wrapper
 
@@ -20,11 +25,11 @@ class Device:
         self.name = name
         self.status = status
 
-    @actoins_print
+    @check_status_before_action
     def turn_on(self):
         self.status = True
 
-    @actoins_print
+    @check_status_before_action
     def turn_off(self):
         self.status = False
 
