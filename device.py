@@ -8,7 +8,7 @@ def actoins_print(func):
                 status = 'on'
             else:
                 status = 'off'
-        print(f'Action: {func.__name__}, Device: {device.name}, Status: {status}')
+        print(f'Action: {func.__name__}, Device: {device.name}')
         return func(*args, **kwargs)
     return wrapper
 
