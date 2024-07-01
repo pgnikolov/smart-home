@@ -16,7 +16,7 @@ class Controller:
         self.name = name
 
 
-class LightController(Controller):
+class LightingController(Controller):
 
     def __init__(self, controller_id, name):
         super().__init__(controller_id, name)
@@ -27,7 +27,7 @@ class LightController(Controller):
         light.color = color
 
 
-class ThermostatController(Controller):
+class TemperatureController(Controller):
 
     def __init__(self, controller_id, name):
         super().__init__(controller_id, name)

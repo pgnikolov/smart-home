@@ -1,3 +1,6 @@
+from device import Light, Thermostat, DoorLock
+from controller import LightingController, TemperatureController
+
 class SmartHome:
     def __init__(self):
         self.devices = []
@@ -6,7 +9,6 @@ class SmartHome:
     def add_device(self, device):
 
     def add_controller(self, controller):
-
 
     def get_device_status(self, device_id):
 
