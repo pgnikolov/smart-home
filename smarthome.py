@@ -1,18 +1,27 @@
-from device import Light, Thermostat, DoorLock
-from controller import LightingController, TemperatureController
+from device import Device, Light, Thermostat, DoorLock
+from controller import Controller, LightingController, TemperatureController
+
 
 class SmartHome:
     def __init__(self):
         self.devices = []
         self.controllers = []
 
-    def add_device(self, device):
+    def add_device(self, device: Device):
+        self.devices.append(device)
 
-    def add_controller(self, controller):
+    def add_controller(self, controller: Controller):
+        self.controllers.append(controller)
 
     def get_device_status(self, device_id):
+        for device in self.devices:
+            if device.id == device_id and isinstance(device, Device):
+                return device.status
 
     def get_controller_devices(self, controller_id):
+        for controller in self.controllers:
+            if controller.id == controller_id and isinstance(controller, Controller):
+                return controller.name
 
 
 smart_home = SmartHome()
@@ -38,7 +47,7 @@ temp_controller.add_device(thermostat1)
 lighting_controller.add_device(light1)
 
 # Control devices
-temp_controller.maintain_temperature()
+temp_controller.maintain_temperature(26)
 lighting_controller.adjust_lighting(75, "warm white")
 
 print(smart_home.get_device_status("L001"))  # True

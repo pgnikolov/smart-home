@@ -1,4 +1,4 @@
-from device import Light, Thermostat
+from device import Device, Light, Thermostat
 
 
 def check_device_status(func):
@@ -14,6 +14,10 @@ class Controller:
     def __init__(self, controller_id, name):
         self.controller_id = controller_id
         self.name = name
+        self.devices = []
+
+    def add_device(self, device: Device):
+        self.devices.append(device)
 
 
 class LightingController(Controller):
@@ -33,9 +37,10 @@ class TemperatureController(Controller):
         super().__init__(controller_id, name)
 
     @check_device_status
-    def set_target_temperature(self, device: Thermostat, target_temp):
+    def maintain_temperature(self, device: Thermostat, target_temp):
         device.target_temp = target_temp
 
     @check_device_status
     def get_current_temperature(self, device: Thermostat):
         print(f"{device.name} current temperature is {device.current_temp}°C")
+

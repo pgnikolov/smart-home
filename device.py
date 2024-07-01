@@ -66,5 +66,3 @@ class DoorLock(Device):
             return "unlocked"
         else:
             return "locked"
-
-
