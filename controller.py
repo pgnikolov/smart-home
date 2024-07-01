@@ -45,8 +45,6 @@ class LightingController(Controller):
                 device.brightness = brightness
                 device.color = color
                 print(f"{self.name}: Adjusted {device.name} to brightness {brightness} and color {color}")
-            else:
-                print(f"{self.name}: Device '{device.name}' is not a light")
 
 
 class TemperatureController(Controller):

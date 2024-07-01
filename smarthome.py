@@ -21,21 +21,24 @@ class SmartHome:
     def get_controller_devices(self, controller_id):
         for controller in self.controllers:
             if controller.controller_id == controller_id and isinstance(controller, Controller):
-                return controller.name
+                return [device.name for device in controller.devices]
 
 
 smart_home = SmartHome()
 
 # Adding devices
 light1 = Light("L001", "Living Room Light", brightness=50)
+light2 = Light("L002", "Bedroom Room Light", brightness=50)
 thermostat1 = Thermostat("T001", "Hallway Thermostat", current_temp=19)
 doorlock1 = DoorLock("D001", "Front Door Lock")
 
 light1.turn_on()
+light2.turn_on()
 thermostat1.turn_on()
 doorlock1.turn_on()
 
 smart_home.add_device(light1)
+smart_home.add_device(light2)
 smart_home.add_device(thermostat1)
 smart_home.add_device(doorlock1)
 
@@ -49,6 +52,7 @@ smart_home.add_controller(lighting_controller)
 # Assign devices to controllers
 temp_controller.add_device(thermostat1)
 lighting_controller.add_device(light1)
+lighting_controller.add_device(light2)
 
 # Control devices
 temp_controller.maintain_temperature()
