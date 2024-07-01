@@ -15,12 +15,12 @@ class SmartHome:
 
     def get_device_status(self, device_id):
         for device in self.devices:
-            if device.id == device_id and isinstance(device, Device):
+            if device.device_id == device_id and isinstance(device, Device):
                 return device.status
 
     def get_controller_devices(self, controller_id):
         for controller in self.controllers:
-            if controller.id == controller_id and isinstance(controller, Controller):
+            if controller.controller_id == controller_id and isinstance(controller, Controller):
                 return controller.name
 
 
@@ -30,6 +30,10 @@ smart_home = SmartHome()
 light1 = Light("L001", "Living Room Light", brightness=50)
 thermostat1 = Thermostat("T001", "Hallway Thermostat", current_temp=19)
 doorlock1 = DoorLock("D001", "Front Door Lock")
+
+light1.turn_on()
+thermostat1.turn_on()
+doorlock1.turn_on()
 
 smart_home.add_device(light1)
 smart_home.add_device(thermostat1)
@@ -47,7 +51,7 @@ temp_controller.add_device(thermostat1)
 lighting_controller.add_device(light1)
 
 # Control devices
-temp_controller.maintain_temperature(26)
+temp_controller.maintain_temperature()
 lighting_controller.adjust_lighting(75, "warm white")
 
 print(smart_home.get_device_status("L001"))  # True

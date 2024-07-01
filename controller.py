@@ -1,14 +1,6 @@
 from device import Device, Light, Thermostat
 
 
-def check_device_status(func):
-    def wrapper(controller, device, *args, **kwargs):
-        if device.get_status() == 'off':
-            print(f"Device '{device.name}' is currently off. Action '{func.__name__}' not allowed.")
-        return func(controller, device, *args, **kwargs)
-    return wrapper
-
-
 class Controller:
 
     def __init__(self, controller_id, name):
@@ -19,28 +11,74 @@ class Controller:
     def add_device(self, device: Device):
         self.devices.append(device)
 
+    def get_device(self, device_id):
+        for device in self.devices:
+            if device.device_id == device_id:
+                return device
+        return None
+
+    def control_device(self, device_id, action):
+        device = self.get_device(device_id)
+        if device:
+            if action == "on":
+                device.turn_on()
+            elif action == "off":
+                device.turn_off()
+            else:
+                print(f"Unknown action '{action}' for device '{device.name}'")
+        else:
+            print(f"No device found with ID {device_id}")
+
+    def monitor_devices(self):
+        for device in self.devices:
+            print(device)
+
 
 class LightingController(Controller):
 
     def __init__(self, controller_id, name):
         super().__init__(controller_id, name)
 
-    @check_device_status
-    def adjust_lighting(self, light: Light, brightness, color):
-        light.brightness = brightness
-        light.color = color
+    def adjust_lighting(self, brightness, color):
+        for device in self.devices:
+            if isinstance(device, Light):
+                device.brightness = brightness
+                device.color = color
+                print(f"{self.name}: Adjusted {device.name} to brightness {brightness} and color {color}")
+            else:
+                print(f"{self.name}: Device '{device.name}' is not a light")
 
 
 class TemperatureController(Controller):
 
     def __init__(self, controller_id, name):
         super().__init__(controller_id, name)
+        self.target_temperature = None
 
-    @check_device_status
-    def maintain_temperature(self, device: Thermostat, target_temp):
-        device.target_temp = target_temp
+    def maintain_temperature(self):
+        for device in self.devices:
+            if isinstance(device, Thermostat):
+                current_temp = device.current_temp
+                target_temp = device.target_temp
+                if target_temp is not None:
+                    if current_temp < target_temp - 1:
+                        print(f"{device.name} start to warming temperature to {target_temp}")
+                    elif current_temp > target_temp:
+                        print(f"{device.name} start cooling down to {target_temp}")
+                    else:
+                        print(f"{device.name}'s temperature is maintained at {device.current_temp}°C")
+                else:
+                    print(f"{device.name} has no target temperature set")
+            else:
+                print(f"{device.name} is not a thermostat")
 
-    @check_device_status
+    def set_target_temperature(self, thermostat_id, target_temp):
+        thermostat = self.get_device(thermostat_id)
+        if isinstance(thermostat, Thermostat):
+            thermostat.target_temp = target_temp
+            print(f"{self.name}: Set {thermostat.name}'s target temperature to {target_temp}°C")
+        else:
+            print(f"{self.name}: No thermostat found with ID {thermostat_id}")
+
     def get_current_temperature(self, device: Thermostat):
         print(f"{device.name} current temperature is {device.current_temp}°C")
-
