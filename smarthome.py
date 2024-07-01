@@ -35,7 +35,6 @@ doorlock1 = DoorLock("D001", "Front Door Lock")
 light1.turn_on()
 light2.turn_on()
 thermostat1.turn_on()
-doorlock1.turn_on()
 
 smart_home.add_device(light1)
 smart_home.add_device(light2)
