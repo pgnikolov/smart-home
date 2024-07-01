@@ -36,6 +36,8 @@ class Controller:
 
 class LightingController(Controller):
 
+    colors = ['warm white', 'neutral white', 'cool white']
+
     def __init__(self, controller_id, name):
         super().__init__(controller_id, name)
 
@@ -43,8 +45,11 @@ class LightingController(Controller):
         for device in self.devices:
             if isinstance(device, Light):
                 device.brightness = brightness
-                device.color = color
-                print(f"{self.name}: Adjusted {device.name} to brightness {brightness} and color {color}")
+                if color in self.colors:
+                    device.color = color
+                    print(f"{self.name}: Adjusted {device.name} to brightness {brightness} and color {color}")
+                else:
+                    print(f"Unknown color '{color}' for device '{device.name}'")
 
 
 class TemperatureController(Controller):
