@@ -55,7 +55,12 @@ lighting_controller.add_device(light2)
 
 # Control devices
 temp_controller.maintain_temperature()
+temp_controller.get_current_temperature(thermostat1)
 lighting_controller.adjust_lighting(75, "warm white")
+# print(doorlock1.turn_on())
+print(light2.turn_on())
+print(lighting_controller.control_device('L002', 'on'))
+print(lighting_controller.control_device('L002', 'on'))
 
 print(smart_home.get_device_status("L001"))  # True
 print(smart_home.get_device_status("T001"))  # True

@@ -21,9 +21,9 @@ class Controller:
         device = self.get_device(device_id)
         if device:
             if action == "on":
-                device.turn_on()
+                return device.turn_on()
             elif action == "off":
-                device.turn_off()
+                return device.turn_off()
             else:
                 print(f"Unknown action '{action}' for device '{device.name}'")
         else:
